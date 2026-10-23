@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kelas Kedinasan - BrainUp</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  :root{
+    --maroon:#5D0000;
+    --maroon-deep:#3D0000;
+    --maroon-light:#7A1111;
+    --gold:#F4A259;
+    --gold-soft:#FFE8D0;
+    --gold-bright:#FFC080;
+    --bg-base:#FDFBF7;
+    --bg-soft:#F5ECE8;
+    --white:#FFFFFF;
+    --text:#1E1E1E;
+    --muted:#6B7280;
+    --border:#E5E7EB;
+    --success:#16A34A;
+    --success-soft:#DCFCE7;
+    --danger:#DC2626;
+    --danger-soft:#FEE2E2;
+    --purple:#4F46E5;
+    --purple-soft:#EEF2FF;
+    --wa:#25D366;
+  }
+  
+  body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background: 
+      linear-gradient(to bottom, rgba(61, 0, 0, 0.88), rgba(93, 0, 0, 0.95)), 
+      url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+    color: var(--text); 
+    line-height: 1.6; 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+    overflow-x: hidden;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4 { 
+    font-family: 'Montserrat', sans-serif !important; 
+    font-weight: 900 !important; 
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+
+  /* HEADER */
+  .header { 
+    background: rgba(253, 251, 247, 0.95); 
+    backdrop-filter: blur(10px); 
+    padding: 15px 30px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 3px solid var(--gold); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .brand-wrapper { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { height: 45px; object-fit: contain; }
+  .tagline { display: flex; flex-direction: column; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.75rem; line-height: 1.3; border-left: 2px solid var(--gold); padding-left: 15px; }
+  .tagline span:first-child { font-weight: 800; color: var(--maroon); font-style: italic; }
+  .tagline span:last-child { font-weight: 600; color: var(--muted); letter-spacing: 0.5px; }
+  
+  .header-nav { display: flex; gap: 10px; align-items: center; }
+  .nav-link { 
+    color: var(--maroon); font-weight: 700; font-size: 14px; text-decoration: none; 
+    padding: 8px 16px; border-radius: 8px; background: var(--bg-soft); transition: 0.3s;
+  }
+  .nav-link:hover { background: var(--gold); color: #fff; }
+  .btn-back { color: var(--maroon); font-weight: 700; text-decoration: none; font-size: 15px; transition: 0.3s; display: flex; align-items: center; gap: 6px; background: var(--bg-soft); padding: 8px 16px; border-radius: 8px; border: 1.5px solid transparent; cursor: pointer; }
+  .btn-back:hover { background: var(--maroon); color: #fff; border-color: var(--gold); transform: translateX(-3px); }
+
+  /* CONTAINER */
+  .container { max-width: 1300px; margin: 50px auto; padding: 0 20px; position: relative; z-index: 1; }
+  .page-title { text-align: center; margin-bottom: 50px; }
+  
+  .page-title h1 { 
+    font-size: 3.2rem; 
+    color: var(--gold); 
+    margin-bottom: 15px; 
+    letter-spacing: -1.5px; 
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  .page-title p { 
+    color: #fff; 
+    font-size: 1.1rem; 
+    font-weight: 500;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  /* GRID KATEGORI: 4 KOLOM */
+  .grid-kategori { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 25px; 
+    justify-content: center;
+  }
+  
+  /* KARTU FULL BACKGROUND */
+  .card { 
+    border-radius: 20px; 
+    overflow: hidden; 
+    position: relative; 
+    height: 420px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    padding: 25px;
+    text-decoration: none;
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(244,162,89,.35); }
+
+  /* OVERLAY MAROON */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(61,0,0,0.98) 0%, rgba(61,0,0,0.7) 60%, rgba(61,0,0,0.1) 100%);
+    z-index: 1;
+    transition: 0.4s;
+  }
+  .card:hover .card-overlay { 
+    background: linear-gradient(to top, rgba(93,0,0,1) 0%, rgba(61,0,0,0.8) 60%, rgba(61,0,0,0.2) 100%); 
+  }
+
+  /* KONTEN */
+  .card-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+  }
+
+  .card-content h3 { 
+    color: var(--gold); 
+    font-size: 1.5rem; 
+    margin-bottom: 8px; 
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  }
+  
+  .card-content p {
+    color: #E5D5D5;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  /* BUTTON GROUP */
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn { 
+    display: block;
+    padding: 12px 15px; 
+    border-radius: 10px; 
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; 
+    font-size: 13px; 
+    letter-spacing: 0.5px;
+    transition: 0.3s; 
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .btn-materi { 
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%); 
+    color: var(--maroon-deep); 
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 15px rgba(244,162,89,0.4);
+  }
+  .card:hover .btn-materi { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244,162,89,0.6);
+  }
+  
+  .btn-to { 
+    background: rgba(255,255,255,0.1); 
+    color: #fff; 
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  .btn-to:hover {
+    background: #fff;
+    color: var(--maroon-deep);
+    border-color: #fff;
+  }
+  
+  .btn-na { 
+    background: rgba(255,255,255,0.1); 
+    color: rgba(255,255,255,0.5); 
+    cursor: not-allowed; 
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+
+  /* FLOATING WA */
+  .float-wa { 
+    position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, var(--wa) 0%, #128C7E 100%); 
+    color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; 
+    justify-content: center; box-shadow: 0 10px 25px rgba(37,211,102,0.4); z-index: 999; 
+    transition: 0.3s; cursor: pointer; border: 3px solid var(--gold); text-decoration: none;
+  }
+  .float-wa:hover { transform: scale(1.1) rotate(10deg); }
+  .float-wa svg { width: 30px; height: 30px; fill: currentColor; }
+
+  /* FOOTER */
+  footer { 
+    background: rgba(61, 0, 0, 0.98); color: #fff; 
+    padding: 30px 20px; text-align: center; position: relative; z-index: 10; border-top: 3px solid var(--gold);
+    backdrop-filter: blur(10px);
+    display: flex; flex-direction: column; align-items: center; gap: 15px;
+  }
+  .footer-socials { display: flex; gap: 15px; margin-bottom: 5px; }
+  .social-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05); border: 1.5px solid rgba(244,162,89,0.3);
+    display: flex; align-items: center; justify-content: center; transition: 0.3s; text-decoration: none;
+  }
+  .social-btn svg { width: 20px; height: 20px; fill: #E5D5D5; transition: 0.3s; }
+  .social-btn:hover { background: var(--gold); border-color: var(--gold); transform: translateY(-3px); }
+  .social-btn:hover svg { fill: var(--maroon-deep); }
+  .footer-content p { color: #E5D5D5; font-size: 0.8rem; margin-bottom: 5px; }
+  .footer-content .copyright { color: #9CA3AF; font-size: 0.75rem; }
+
+  /* MODAL WA */
+  .modal-wa {
+    display: none; position: fixed; inset: 0; background: rgba(61,0,0,0.85); 
+    backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-wa.active { display: flex; }
+  .modal-wa-box {
+    background: var(--bg-base); border-radius: 24px; width: 100%; max-width: 450px;
+    padding: 35px 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 3px var(--gold);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .modal-wa-box h3 { text-align: center; font-size: 1.5rem; margin-bottom: 10px; color: var(--maroon);}
+  .modal-wa-box p { text-align: center; font-size: 0.95rem; color: var(--muted); margin-bottom: 25px; }
+  .form-group-wa { margin-bottom: 15px; }
+  .form-group-wa label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 5px; color: var(--maroon); }
+  .form-group-wa input, .form-group-wa select { width: 100%; padding: 12px 15px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.95rem; background: #F9FAFB; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s;}
+  .form-group-wa input:focus, .form-group-wa select:focus { outline: none; border-color: var(--maroon); background: #fff; box-shadow: 0 0 0 3px rgba(244,162,89,0.2);}
+  .btn-wa-kirim { 
+    display: block; width: 100%; padding: 15px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); 
+    color: #fff; border: none; border-radius: 12px; font-weight: 800; font-size: 1rem; 
+    cursor: pointer; margin-top: 15px; text-align: center; font-family: 'Outfit', sans-serif; transition: 0.3s;
+  }
+  .btn-wa-kirim:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+  .btn-wa-tutup { background: transparent; color: #9CA3AF; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 15px; transition: 0.3s; width: 100%; text-align: center; }
+  .btn-wa-tutup:hover { color: var(--maroon); }
+  @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .grid-kategori { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card { height: 400px; }
+  }
+
+  @media (max-width: 800px) {
+    .grid-kategori { grid-template-columns: repeat(2, 1fr); }
+    .card { height: 380px; }
+  }
+
+  @media (max-width: 600px) {
+    .header { padding: 10px 15px; flex-wrap: wrap; gap: 10px; }
+    .brand img { height: 32px; }
+    .tagline { display: none; }
+    .header-nav { width: 100%; justify-content: space-between; }
+    .nav-link, .btn-back { padding: 6px 12px; font-size: 12px; }
+    
+    .container { margin: 30px auto; }
+    .page-title h1 { font-size: 2rem; }
+    .grid-kategori { grid-template-columns: 1fr; gap: 20px; }
+    .card { height: 320px; padding: 20px; }
+    .card-content h3 { font-size: 1.4rem; margin-bottom: 5px; }
+    .card-content p { font-size: 0.8rem; display: block; margin-bottom: 15px; }
+    .btn { padding: 12px; font-size: 13px; }
+    .btn-group { flex-direction: row; }
+    
+    .float-wa { width: 45px; height: 45px; bottom: 15px; right: 15px; border-width: 2px; }
+    .float-wa svg { width: 24px; height: 24px; }
+    body { background-attachment: scroll; }
+    .modal-wa-box { padding: 25px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="https://web-awal-brainup.vercel.app/" class="brand-wrapper">
+      <div class="brand">
+        <img src="https://i.imgur.com/VXUBgjD.png" alt="Logo BrainUp">
+      </div>
+      <div class="tagline">
+        <span>#Jangan Panik!</span>
+        <span>BrainUp Punya Taktik</span>
+      </div>
+    </a>
+    
+    <div class="header-nav">
+      <a href="katalog-psikotes.html" class="nav-link">Latihan Psikotes</a>
+      <a href="https://web-awal-brainup.vercel.app/" class="btn-back">← Dashboard</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="page-title">
+      <h1>Kelas Kedinasan</h1>
+      <p>Pilih sekolah kedinasan targetmu. Lulus, langsung diusulkan jadi CPNS.</p>
+    </div>
+
+    <div class="grid-kategori">
+      
+      <!-- 1. PKN STAN -->
+      <div class="card" style="background-image: url('https://i.imgur.com/yRz8yRA.png');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>PKN STAN</h3>
+          <p>Politeknik Keuangan Negara STAN. Lulusan diusulkan CPNS di Kementerian Keuangan.</p>
+          <div class="btn-group">
+            <a href="https://materi-stan-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <a href="https://pilihan-to-stan-bu.vercel.app/" class="btn btn-to">TryOut</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. IPDN -->
+      <div class="card" style="background-image: url('https://i.imgur.com/ZI1Woih.png');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>IPDN</h3>
+          <p>Institut Pemerintahan Dalam Negeri. Jalur utama jadi pamong praja di Kemendagri dan pemda.</p>
+          <div class="btn-group">
+            <a href="https://materi-ipdn-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <a href="https://pilihan-to-ipdn-bu.vercel.app/" class="btn btn-to">TryOut</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. STIS -->
+      <div class="card" style="background-image: url('https://i.imgur.com/FsS3cu5.png');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>STIS</h3>
+          <p>Politeknik Statistika STIS. Lulusan diarahkan jadi CPNS di Badan Pusat Statistik (BPS).</p>
+          <div class="btn-group">
+            <a href="https://materi-stis-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <a href="https://pilihan-to-stis-bu.vercel.app/" class="btn btn-to">TryOut</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. STMKG -->
+      <div class="card" style="background-image: url('https://i.imgur.com/e3uVACY.png');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>STMKG</h3>
+          <p>Sekolah Tinggi Meteorologi, Klimatologi, dan Geofisika. Lulusan diusulkan CPNS di BMKG.</p>
+          <div class="btn-group">
+            <a href="https://materi-stmkg-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <a href="https://pilihan-to-stmkg-bu.vercel.app/" class="btn btn-to">TryOut</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. POLTEK SSN -->
+      <div class="card" style="background-image: url('https://i.imgur.com/Jmj1D7B.png');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>Poltek SSN</h3>
+          <p>Politeknik Siber dan Sandi Negara. Lulusan diarahkan jadi CPNS di BSSN bidang keamanan siber.</p>
+          <div class="btn-group">
+            <a href="https://materi-ssn-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <a href="https://pilihan-to-ssn-bu.vercel.app/" class="btn btn-to">TryOut</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. POLTEKIMIPAS -->
+      <div class="card" style="background-image: url('https://i.imgur.com/358vWHc.png');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>Poltekimipas</h3>
+          <p>Politeknik Imigrasi dan Pemasyarakatan. Lulusan diusulkan CPNS di Kementerian Imigrasi dan Pemasyarakatan.</p>
+          <div class="btn-group">
+            <a href="https://materi-poltekimipas-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <a href="https://pilihan-to-poltekimipas-bu.vercel.app/" class="btn btn-to">TryOut</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. STTD -->
+      <div class="card" style="background-image: url('https://i.imgur.com/wBGfvTs.png');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>STTD</h3>
+          <p>Politeknik Transportasi Darat Indonesia - STTD. Lulusan diusulkan CPNS di lingkungan Kemenhub.</p>
+          <div class="btn-group">
+            <a href="https://materi-sttd-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <a href="https://pilihan-to-sttd-bu.vercel.app/" class="btn btn-to">TryOut</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. STIN -->
+      <div class="card" style="background-image: url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop');">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h3>STIN</h3>
+          <p>Sekolah Tinggi Intelijen Negara. Persiapan seleksi calon taruna intelijen.</p>
+          <div class="btn-group">
+            <a href="https://materi-stin-bu.vercel.app/" class="btn btn-materi">Materi</a>
+            <!-- Belum ada link TO, jadi dibikin non-aktif -->
+            <a href="#" class="btn btn-na" onclick="event.preventDefault();">TryOut (Segera)</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="javascript:void(0)" onclick="bukaModalWa()" class="float-wa" title="Hubungi Admin">
+    <svg viewBox="0 0 24 24"><path d="M12.031 2C6.51 2 2.014 6.496 2.014 12.017c0 1.766.461 3.49 1.336 5.012L2 22l5.108-1.338A9.968 9.968 0 0012.03 22c5.521 0 10.017-4.496 10.017-10.017S17.552 2 12.031 2zm5.223 14.03c-.222.625-1.286 1.196-1.762 1.242-.476.047-1.065.21-3.488-1.007-2.914-1.466-4.763-4.478-4.908-4.68-.144-.203-1.166-1.554-1.166-2.966 0-1.412.735-2.104 1.003-2.392.268-.288.587-.36.783-.36.196 0 .392.004.563.013.183.01.43-.07.67.515.245.595.833 2.053.908 2.203.075.15.125.325.025.525-.1.2-.375.604-.6.83-.225.225-.35.375-.225.6.125.225.556.917 1.192 1.486.816.728 1.504.955 1.717 1.062.212.107.338.088.463-.054.125-.142.535-.625.678-.838.143-.213.286-.178.48-.104.195.074 1.238.584 1.45.69.212.107.35.16.4.25.05.09.05.522-.172 1.147z"/></svg>
+  </a>
+
+  <!-- MODAL WHATSAPP BIODATA -->
+  <div class="modal-wa" id="modalWa">
+    <div class="modal-wa-box">
+      <h3>Konsultasi Bimbel</h3>
+      <p>Isi data singkat ini agar Admin kami bisa memberikan rekomendasi terbaik untukmu.</p>
+      
+      <form id="formWa" onsubmit="kirimWa(event)">
+        <div class="form-group-wa">
+          <label>Nama Lengkap</label>
+          <input type="text" id="waNama" placeholder="Masukkan nama Anda" required>
+        </div>
+        <div class="form-group-wa">
+          <label>Asal Kota / Sekolah</label>
+          <input type="text" id="waAsal" placeholder="Contoh: SMAN 1 Jakarta" required>
+        </div>
+        <div class="form-group-wa">
+          <label>Pilihan Program</label>
+          <select id="waProgram" required>
+            <option value="" disabled selected>Pilih program...</option>
+            <option value="Bimbel Reguler">Bimbel Reguler</option>
+            <option value="Bimbel Privat">Bimbel Privat (1-on-1)</option>
+            <option value="Kelas Online / Zoom">Kelas Online / Zoom</option>
+            <option value="TryOut & Pembahasan">Beli Paket TryOut</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-wa-kirim">Kirim & Chat Admin</button>
+        <button type="button" class="btn-wa-tutup" onclick="tutupModalWa()">Batal</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-socials">
+      <a href="https://instagram.com/brainup.id" target="_blank" class="social-btn" title="Instagram BrainUp">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://tiktok.com/@brainup.id" target="_blank" class="social-btn" title="TikTok BrainUp">
+        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.22-1.15 4.41-2.92 5.83-1.76 1.41-4.2 1.96-6.45 1.58-2.25-.38-4.34-1.83-5.57-3.76-1.23-1.93-1.57-4.4-.93-6.58.63-2.18 2.22-4.08 4.32-4.96 2.09-.88 4.52-.85 6.6.09v4.16c-1.23-.44-2.68-.46-3.9.02-1.22.48-2.22 1.47-2.69 2.68-.48 1.21-.44 2.65.14 3.83.58 1.18 1.68 2.07 2.95 2.42 1.27.35 2.68.18 3.78-.54 1.1-.72 1.78-1.96 1.81-3.27.03-3.93.01-7.86.02-11.79z"/></svg>
+      </a>
+      <a href="https://youtube.com/@brainup.id" target="_blank" class="social-btn" title="YouTube BrainUp">
+        <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-content">
+      <p class="copyright">© 2026 BrainUp - Bimbel & Platform TryOut.</p>
+      <p>Membangun masa depan, satu tryout dalam satu waktu.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ==========================================
+    // LOGIKA MODAL WHATSAPP (BIODATA)
+    // ==========================================
+    function bukaModalWa() {
+      document.getElementById('modalWa').classList.add('active');
+    }
+
+    function tutupModalWa() {
+      document.getElementById('modalWa').classList.remove('active');
+    }
+
+    document.getElementById('modalWa').addEventListener('click', function(e) {
+      if (e.target === this) tutupModalWa();
+    });
+
+    function kirimWa(event) {
+      event.preventDefault(); 
+      const NOMOR_WA_ADMIN = "6281234567890"; // GANTI DENGAN NOMOR ADMIN ASLI
+      
+      const nama = document.getElementById('waNama').value;
+      const asal = document.getElementById('waAsal').value;
+      const program = document.getElementById('waProgram').value;
+      
+      const pesan = `Halo Admin BrainUp,%0A%0ASaya ingin konsultasi.%0A%0A*Nama:* ${nama}%0A*Asal/Kota:* ${asal}%0A*Program:* ${program}%0A%0AMohon info selengkapnya ya Kak. Terima kasih!`;
+      
+      const urlWa = `https://wa.me/${NOMOR_WA_ADMIN}?text=${pesan}`;
+      window.open(urlWa, '_blank');
+      
+      tutupModalWa();
+    }
+  </script>
+
+</body>
+</html>
